@@ -1,44 +1,43 @@
 # Known failures for qcom-distro, see README.md for the format.
 
-hamoa-iot-evk:
-  # the v4l2 encoder times out, so the decode tests have no stream to play
-  - test: GStreamer_Video_Encode_h264_480p
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3347
-  - test: GStreamer_Video_Encode_h265_480p
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3347
-  - test: GStreamer_Video_Decode_h264_480p
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3347
-  - test: GStreamer_Video_Decode_h265_480p
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3347
-
 lemans-evk:
-  # no ALSA capture device is registered
+  # two audio topology directories (qcs9100 and sa8775p) match the DT model
+  - test: AudioRecord
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
   - test: AudioRecord_Config01
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/1531
-    kernels:
-      - linux-qcom-next
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+  - test: AudioRecord_Config02
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
   - test: AudioRecord_Config03
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/1531
-    kernels:
-      - linux-qcom-next
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+  - test: AudioRecord_Config04
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
   - test: AudioRecord_Config05
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/1531
-    kernels:
-      - linux-qcom-next
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+  - test: AudioRecord_Config06
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
   - test: AudioRecord_Config07
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/1531
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+  - test: AudioRecord_Config08
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+  - test: AudioRecord_Config09
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+  - test: AudioRecord_Config10
+    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3547
+
+monaco-evk:
+  # the UFS link fails to recover on runtime resume and the rootfs turns
+  # read-only, so the remaining capture tests cannot write their results
+  - test: AudioRecord_Config08
+    comment: UFS link recovery fails during the audio tests
     kernels:
       - linux-qcom-next
   - test: AudioRecord_Config09
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/1531
+    comment: UFS link recovery fails during the audio tests
     kernels:
       - linux-qcom-next
-
-qcs6490-rb3gen2:
-  # a new FastRPC session on the CDSP unsigned PD fails with 0x80000600
-  # after a few runs, while fastrpc logs remote heap unmap errors
-  - test: fastrpc_test
-    comment: https://github.com/qualcomm-linux/meta-qcom/issues/3312
+  - test: AudioRecord_Config10
+    comment: UFS link recovery fails during the audio tests
     kernels:
       - linux-qcom-next
 
