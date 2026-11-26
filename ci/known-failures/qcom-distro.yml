@@ -4,3 +4,35 @@ sm8750-mtp:
   # average FPS stays around 81 on a 120 Hz display, below the 102 threshold
   - test: weston-simple-egl
     comment: average FPS below the refresh rate threshold
+  # [next only] flaky, see below
+  - test: hotplug
+    comment: next only, flaky
+
+# [next only] entries that exercise the pre-merge known failures, drop them
+# on the next rebuild of the branch
+
+# passes on every run: the linux-qcom-next pre-merge-basic job must fail as
+# an unexpected pass, and the linux-qcom-6.18 one must stay green
+lemans-evk:
+  - test: Docker_Kernel_Config
+    comment: next only, expected unexpected pass
+    kernels:
+      - linux-qcom-next
+
+# failed in one of the last three runs: a failure is reported as skipped,
+# a pass fails its job as an unexpected pass
+qcs9100-ride:
+  - test: weston-simple-shm
+    comment: next only, flaky
+    kernels:
+      - linux-qcom-next
+  - test: weston-simple-egl
+    comment: next only, flaky
+    kernels:
+      - linux-qcom-next
+
+hamoa-iot-evk:
+  - test: fastrpc_test_cdsp
+    comment: next only, flaky
+    kernels:
+      - linux-qcom-6.18
